@@ -1,7 +1,6 @@
 //Laila Carolina de Paula Miranda 11721EEL022
 
 #include <stdio.h>
-#include <conio.h>
 
 void binario_decimal (char binario[])
 {
