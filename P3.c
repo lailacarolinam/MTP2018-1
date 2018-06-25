@@ -1,111 +1,112 @@
+//Laila Carolina de Paula Miranda 11721EEL022
+
 #include <stdio.h>
 
-int dtob(int a)
+#include <stdio.h>
+void conv2bin(int i)
 {
-	int i,r;
-	for(i=31;i>0;i--)
-	{	r = a >> i;
-		if(r & 1){printf("1");}
-		else {printf ("0");}
-	}
+    unsigned int u_i=0;
+    int j=0, b[32]={0};
+    u_i = (unsigned int)i;
+    for(j=31;j>=0;j--) 
+	{
+        b[j]=u_i&0x1;
+        u_i=u_i>>1;
+    }
+    for (j=0;j<=31;j++)
+        printf("%d", b[j]);
 }
 int main()
 {
-	int	menu,n,m;
-	printf("\n           MENU:"
-	"\n1-NOT\n2-AND\n3-OR\n4-XOR\n5-Right Shift\n6-Left Shift\n");
-	do{
-	scanf("%d", &menu);
-	getchar();
-
+	int num=0, num2=0, menu, conv=0, bin=0, bin2=0, conv_bin=0;
+	do
+	{
+		printf("\n1. NOT \n2. AND \n3. OR \n4. XOR \n5. Right Shitf \n6. Left Shitf \n7. Sair do Programa \n:");
+		scanf("%i", &menu);
+		getchar();
 		switch(menu)
 		{
 			case 1:
-				printf("\nDigite um numero inteiro: ");
-				scanf("%d", &n);
-				getchar();
-				printf("\t\t\t\t   A | NOT\n");
-				printf("%d  (",n);
-				dtob(n);
-				printf(")| %d  (",(~n));
-				dtob(~n);
-				printf(")\n\n");
-				break;
+			    printf("\n: "); 
+			    scanf("%i", &num); 
+			    getchar();
+			    conv=~num;
+				printf("\nNOT %i (", num); 
+				conv2bin(num); 
+				printf(") : %i (", conv);
+				conv2bin(conv);
+				printf(")\n"); // Desculpa a gambiarra
+			    break;
 			case 2:
-				printf("\n Digite dois numeros inteiros:\n");
-				scanf("%d",&n);
-				scanf("%d",&m);
-				getchar();
-				printf("\n\t\tA\t\t    |\t\tB\t\t\t |\t\t  AND\t\t\n");
-				printf("%d(",n);
-				dtob(n);
-				printf(") | %d(",m);
-				dtob(m);
-				printf(") | %d(", n&m);
-				dtob(n&m);
-				printf(")\n\n") ;
+				printf("\n: "); 
+			    scanf("%i %i", &num, &num2); 
+			    getchar();
+			    conv=num&num2;
+			    printf("\n %i (", num); 
+				conv2bin(num); 
+				printf(") AND %i (", num2);
+				conv2bin(num2);
+				printf(") : %i (", conv);
+				conv2bin(conv);
+				printf(")\n");
 				break;
 			case 3:
-				printf("\n Digite dois numeros inteiros:\n");
-				scanf("%d",&n);
-				getchar();
-				scanf("%d",&m);
-				getchar();
-				printf("\n\t\tA\t\t     |\t\tB\t\t\t  |\t\t  OR\t\t\n");
-				printf("%d( ",n);
-				dtob(n);
-				printf(") | %d(",n);
-				dtob(m);
-				printf(") | %d(",n|m);
-				dtob(n|m);
-				printf(")\n\n") ;
+				printf("\n: "); 
+			    scanf("%i %i", &num, &num2); 
+			    getchar();
+			    conv=num|num2;
+			    printf("\n %i (", num); 
+				conv2bin(num); 
+				printf(") OR %i (", num2);
+				conv2bin(num2);
+				printf(") : %i (", conv);
+				conv2bin(conv);
+				printf(")\n");
 				break;
 			case 4:
-				printf("\n Digite dois numeros inteiros:\n");
-				scanf("%d",&n);
-				getchar();
-				scanf("%d",&m);
-				getchar();
-				printf("\n\t\tA\t\t    |\t\tB\t\t\t |\t\t  XOR\t\t\n");
-				printf("%d(",n);
-				dtob(n);
-				printf(") | %d(",m);
-				dtob(m);
-				printf(") | %d(",n^m);
-				dtob(n^m);
-				printf(")\n\n");
+				printf("\n: "); 
+			    scanf("%i %i", &num, &num2); 
+			    getchar();
+			    conv=num^num2;
+			    printf("\n %i (", num); 
+				conv2bin(num); 
+				printf(") XOR %i (", num2);
+				conv2bin(num2);
+				printf(") : %i (", conv);
+				conv2bin(conv);
+				printf(")\n");
 				break;
 			case 5:
-				printf("\n Digite um numero inteiro e quantos bits deseja deslocar para a direita:\n");
-				scanf("%d",&n);
-				getchar();
-				scanf("%d",&m);
-				getchar();
-				printf("\n\t\tA\t\t       |\t\t>>\t\t     |\t RIGHT SHIFT\t\t\n");
-				printf("%d(",n);
-				dtob(n);
-				printf(") | %d>>(",m);
-				dtob(m);
-				printf(") | %d(",n>>m);
-				dtob(n>>m);
-				printf(")\n\n") ;
-				break;
+				printf("\n: "); 
+			    scanf("%i %i", &num, &num2); 
+			    getchar();
+			    conv=num>>num2;
+			    printf("\n %i (", num); 
+				conv2bin(num); 
+				printf(") >> %i (", num2);
+				conv2bin(num2);
+				printf(") : %i (", conv);
+				conv2bin(conv);
+				printf(")\n");
 			case 6:
-				printf("\n Digite um numero inteiro e quantos bits deseja deslocar para a esquerda:\n");
-				scanf("%d",&n);
-				getchar();
-				scanf("%d",&m);
-				getchar();
-				printf("\n\t\tA\t\t     |\t\t<<\t\t\t\t  |\t\tLEFT SHIFT\t\t");
-				printf("%d(",n);
-				dtob(n);
-				printf(") | << %d bits(",m);
-				dtob(m);
-				printf(") | %d(",n<<m);
-				dtob(n<<m);
-				printf(")\n\n") ;
+				printf("\n: "); 
+			    scanf("%i %i", &num, &num2); 
+			    getchar();
+			    conv=num<<num2;
+			    printf("\n %i (", num); 
+				conv2bin(num); 
+				printf(") << %i (", num2);
+				conv2bin(num2);
+				printf(") : %i (", conv);
+				conv2bin(conv);
+				printf(")\n");
+			default:
+				if (menu!=7)
+				{
+				printf("\nOpcao invalida");
 				break;
+		    	}
 		}
-    }while(menu>0 && menu<7);
- return 0;
+	}while(menu!=7);
+	return 0;
 }
