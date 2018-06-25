@@ -2,114 +2,164 @@
 
 #include <stdio.h>
 
-void binario_decimal (char binario[])
+void preenche(char bits[])
 {
-	int i = 0, decimal = 0;
-	while(binario[i]) 
-	{
-		decimal = decimal*2 + (binario[i] - '0');
-		i++;
-	}
-	printf ("\nO numero digitado em decimal: %d\n", decimal);
+	printf("\nPreencha com o valor a ser convertido: ");
+	scanf("%s", bits);
 }
-
-void binario_hexd (char binario[])
+int conv2oct(int num, int b)
 {
-	int i = 0, decimal = 0;
-	while(binario[i])
-	{
-		decimal = decimal*2 + (binario[i] - '0');
-		i++;
-	}
-	printf ("\nO numero digitado em hexadecimal: %x\n", decimal);
+    int aux=0, i=1;
+    while (num!=0)
+    {
+        aux+=(num%b)*i;
+        num/=b;
+        i*=10;
+    }
+    return aux;
 }
-
-int main ()
+void conv2hex(int num, int b, int menu)
 {
-	int operador, decimal, hexd, hexd1, octal, cont, x;
-	char binario[256];
-	do{
-	printf(	"         MENU:\n1)Binario para Decimal\n2)Binario para Hexadecimal\n3)Hexadecimal para Decimal\n4)Hexadecimal para Binário\n5)Decimal para Binario\n6)Decimal para Hexadecimal\n7)Octal para Decimal\n8)Decimal para Octal\n\n");
-	scanf ("%d", &operador);
-	getchar();
-	
-	
-	if (operador == 1) // Binario -> Decimal
+	int i=0, j=0, k=0, aux=0, n=0;
+	char hex[256], temp[256];
+	k=num;
+	while (k!=0)
 	{
-		printf ("\nDigite um numero em base binaria:");
-		scanf ("%s", &binario);
-		getchar();
-		binario_decimal (binario);
+		aux=k%b;
+		if (aux<10)
+			temp[j++]=48+aux;
+		else
+		    temp[j++]=55+aux;
+		k=k/b;
+		n++;
 	}
-	
-	else if (operador == 2) // Binario -> Hexd
+	for (i=n-1, j=0; i+1!=0; --i, ++j)
+		hex[j]=temp[i];
+	hex[n]='\0';
+	printf("\n| \"%i\" + \"%i\" | \"%s\"|\n", menu, num, hex);
+}
+int conv2dec(char bits[], int b) 
+{
+	int i=0, aux=0;
+	for(i=0; bits[i]!='\0'; i++)
 	{
-		printf ("\nDigite um numero em base binaria:");
-		scanf ("%s", &binario);
-		getchar();
-		binario_hexd (binario);
-	}
-	
-	else if (operador == 3) // Hex -> Dec
+	    if (bits[i]<=57 && bits[i]>=48)
+	    {
+            aux=aux*b+(bits[i] - '0');
+	    }
+        else if (bits[i]>=65)
+        {
+            {
+        	    if (bits[i]>=97)
+    	        {
+    	        	bits[i]-=32;
+    	        	aux=aux*b+(bits[i] - '7');
+				}
+    	        else
+        	        aux=aux*b+(bits[i] - '7');
+		    }
+	    }
+    }
+    return aux;
+}
+int conv2bin(int num, int b)
+{
+	char bin[256];
+	int i=0, j=0, k=1, n=0, aux=0, aux2;
+	for (n=0; num>=(1<<n); n++);
+	for (i=1; i<=n; i++)
 	{
-		printf ("\nDigite um numero em base hexadecimal:");
-		scanf ("%x", &hexd);
-		getchar();
-		printf ("\nO numero digitado em decimal: %d\n", hexd);
+		if (num%2==0)
+		{
+			bin[n-i]='0';
+			num=num/2;
+		}
+		else
+		{
+			bin[n-i]='1';
+			num=(num-1)/2;
+		}
 	}
-	
-	else if (operador == 4) // Hex -> Bin
+	for (i=0; bin[i]!='\0'; i++)
 	{
-		printf ("\nDigite um numero em base hexadecimal:");
-		scanf ("%x", &hexd);
-		getchar();
-		printf ("\nNumero auxiliar: %d\n", hexd);
-		printf ("\nDigite o numero auxiliar printado acima: ");
-		scanf ("%d", &decimal);
-		getchar();
-		itoa(decimal,binario,2);
-		printf ("\n%d em binario: %s\n", decimal,binario);
+		k=1;
+		for(j=1; j<(n-i); j++)
+		    k=k*b;
+		aux+=(bin[i] - '0')*(k);
 	}
-
-	
-	else if (operador == 5) // Dec -> Bin
+    return aux;
+}
+int main()
+{
+	char bits[256];
+	int menu=0, b=0, cv=0, num=0, test=0;
+	do
 	{
-		printf ("\nDigite um numero em base decimal:");
-		scanf ("%d", &decimal);
-		getchar();
-		itoa(decimal,binario,2);
-		printf ("\n%d em binario: %s\n", decimal,binario);
-	}
-	
-	else if (operador == 6) // Dec -> Hex
-	{
-		printf ("\nDigite um numero em base decimal:");
-		scanf ("%d", &decimal);
-		getchar();
-		printf ("\nO numero digitado em hexadecimal: %x\n", decimal);
-	}
-	
-	else if (operador == 7) // Oct -> Dec
-	{
-		printf ("\nDigite um numero em base octal:");
-		scanf ("%o", &octal);
-		getchar();
-		printf ("\nO numero digitado em decimal: %d\n", octal);
-	}
-	
-	else if (operador == 8) // Dec -> Oct
-	{ 
-		printf ("\nDigite um numero em base decimal:");
-		scanf ("%d", &decimal);
-		getchar();
-		printf ("\nO numero digitado em octal: %o\n", decimal);
-	}
-	
-	else
-	{
-		printf ("\nOPCAO INVALIDA\n");
-	}
-	x++;
-	}while(x<100);
+		printf("\nEscolha a conversao: \n[1]Binario para Decimal \n[2]Binario para Hexadecimal \n[3]Hexadecimal para Decimal \n[4]Hexadecimal para Binario \n[5]Decimal para Binario \n[6]Decimal para Hexadecimal \n[7]Octal para Decimal \n[8]Decimal para Octal \n[9]Sair do programa \n:");
+		scanf("%i", &menu);
+		switch (menu)
+		{
+			case 1: // Bin -> Dec
+				b=2;
+				preenche(bits);
+                cv=conv2dec(bits, b);
+				printf("\n| \"%i\" + \"%s\" | \"%i\" |\n", menu, bits, cv);
+				break;
+			case 2: // Bin -> Hex
+			    b=2;
+			    preenche(bits);
+			    num=conv2dec(bits, b);
+			    b=16;
+                conv2hex(num, b, menu);
+				break;
+			case 3: // Hex -> Dec
+				b=16;
+				preenche(bits);
+                cv=conv2dec(bits, b);
+				printf("\n| \"%i\" + \"%s\" | \"%i\" |\n", menu, bits, cv);
+				break;
+			case 4: // Hex -> Bin
+				b=16;
+				preenche(bits);
+				num=conv2dec(bits, b);
+				b=10;
+				cv=conv2bin(num, b);
+				printf("\n| \"%i\" + \"%s\" | \"%i\" |\n", menu, bits, cv);
+				num=0;
+				break;
+			case 5: // Dec -> Bin
+				b=10;
+				printf("\nPreencha com o valor a ser convertido: ");
+	            scanf("%i", &num);
+                cv=conv2bin(num, b);
+				printf("\n| \"%i\" + \"%i\" | \"%i\" |\n", menu, num, cv);
+				break;
+			case 6: // Dec -> Hex
+			    b=16;
+			    printf("\nPreencha com o valor a ser convertido: ");
+	            scanf("%i", &num);
+                conv2hex(num, b, menu);
+				break;
+			case 7: // Oc -> Dec
+				b=8;
+				preenche(bits);
+                cv=conv2dec(bits, b);
+				printf("\n| \"%i\" + \"%s\" | \"%i\" |\n", menu, bits, cv);
+				break;
+			case 8: // Dec -> Oc
+			    b=8;
+			    printf("\nPreencha com o valor a ser convertido: ");
+            	scanf("%i", &num);
+			    cv=conv2oct(num, b);
+			    printf("\n| \"%i\" + \"%i\" | \"%i\" |\n", menu, num, cv);
+				break;
+			default: 
+			    if(menu!=9)
+			    {
+			    	printf("\n\nEscolha invalida\n\n");
+			        break;
+				}
+		}
+	}while (menu!=9);
 	return 0;
 }
