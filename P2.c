@@ -1,5 +1,4 @@
 //Laila Carolina de Paula Miranda 11721EEL022
-
 #include <stdio.h>
 
 void preenche(char bits[])
