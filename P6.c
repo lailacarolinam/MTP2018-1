@@ -1,5 +1,4 @@
-//Laila Carolina de Paula Miranda
-//11721EEl022
+//Laila Carolina de Paula Miranda 11721EEl022
 
 #include <stdio.h>
 int sm(int len, int *v)
